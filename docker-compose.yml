@@ -1,0 +1,32 @@
+version: '2'
+services:
+  db:
+    image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: docker
+      MYSQL_DATABASE: docker
+      MYSQL_PASSWORD: docker
+  
+  django:
+    build: ./docker/django
+    command: python backend/manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/code
+    ports:
+      - "8000:8000"
+    links:
+      - db
+    depends_on:
+      - db
+
+  node:
+    build: ./docker/node
+    volumes:
+      - .:/code
+    ports:
+      - "3000:3000"
+    links:
+      - django
+    depends_on:
+      - django
