@@ -1,5 +1,6 @@
 # docker-fun
-Run 
+Run
+
 docker-compose up --build
 
 And enjoy!
